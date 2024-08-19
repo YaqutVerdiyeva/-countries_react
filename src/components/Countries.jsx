@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 let BASE_URL = `https://restcountries.com/v2/all`;
 
 const Countries = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState(data);
+  const ref = useRef(null);
+
   useEffect(() => {
     axios.get(BASE_URL).then((res) => {
       setData(res.data);
@@ -12,9 +14,9 @@ const Countries = () => {
     });
   }, []);
 
-  function handleInputChange(e) {
+  function handleInputChange() {
     const filteredItems = data.filter((el) =>
-      el.name.toLowerCase().includes(e.target.value.toLowerCase())
+      el.name.toLowerCase().includes(ref.current.value.toLowerCase())
     );
     setFilteredData(filteredItems);
   }
@@ -34,6 +36,7 @@ const Countries = () => {
             <input
               className="search"
               type="text"
+              ref={ref}
               onChange={handleInputChange}
               placeholder="Search for a country..."
             />
