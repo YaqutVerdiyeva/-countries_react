@@ -3,10 +3,16 @@ import React, { useState } from "react";
 const Header = () => {
   const [darkMode, setDarkMode] = useState(true);
   function changeDarkMode() {
-    document.body.classList.toggle("dark-mode");
+    localStorage.setItem("mode", darkMode);
     setDarkMode(!darkMode);
-    console.log(!darkMode);
   }
+  let mode = localStorage.getItem("mode");
+  if (mode === "true") {
+    document.body.classList.add("dark-mode");
+  } else {
+    document.body.classList.remove("dark-mode");
+  }
+  console.log(mode);
   return (
     <div>
       <header>
